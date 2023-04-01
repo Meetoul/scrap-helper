@@ -6,6 +6,7 @@ ROMS_DIR=/home/user/projects/handheld/collection/roms
 MODULE=screenscraper
 MODULE_PARAM=
 FLAGS="unattend,relative,skipped"
+PLATFORMS_TO_SKIP="bios|doom|ecwolf|j2me|ports"
 
 if [ "$1" = "-s" ]
 then
@@ -15,9 +16,8 @@ fi
 for platform_dir in $ROMS_DIR/* ; do
     platform=$(basename $platform_dir)
 
-    if [ "$platform" = "bios" ]
-    then
-        echo "Found bios directory, skipping..."
+    if [[ "$platform" =~ ^($PLATFORMS_TO_SKIP)$ ]]; then
+        echo "Skipping platform $platform"
         continue
     fi
 
